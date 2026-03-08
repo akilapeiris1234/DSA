@@ -1,0 +1,88 @@
+/* client/features/game/styles/gameover.css */
+/* Game-over panel, result stats, GIF animation styles */
+
+#game-over {
+    width: 100%;
+    margin-top: 30px;
+    padding: 30px;
+    border-radius: 20px;
+    display: none;
+    animation: slideUp 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    border: 2px solid var(--border);
+}
+
+#game-over.win {
+    background: linear-gradient(145deg, #0d2b21, #161b22);
+    border-color: var(--accent);
+    box-shadow: 0 10px 40px rgba(0, 255, 204, 0.15);
+}
+
+#game-over.lose {
+    background: linear-gradient(145deg, #2d1418, #161b22);
+    border-color: var(--primary);
+    box-shadow: 0 10px 40px rgba(255, 51, 102, 0.15);
+}
+
+@keyframes slideUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+#res-title {
+    font-size: 2.5rem;
+    font-weight: 800;
+    margin-bottom: 10px;
+}
+
+.win #res-title {
+    color: var(--accent);
+    text-shadow: 0 0 20px rgba(0, 255, 204, 0.4);
+}
+
+.lose #res-title {
+    color: var(--primary);
+    text-shadow: 0 0 20px rgba(255, 51, 102, 0.4);
+}
+
+.result-stats {
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+    margin: 20px 0;
+}
+
+.res-stat-item b {
+    font-size: 1.5rem;
+    display: block;
+    font-family: 'JetBrains Mono';
+}
+
+.game-over-gif {
+    animation: pop-in 0.6s ease-out;
+}
+
+@keyframes pop-in {
+    0% {
+        transform: scale(0.7);
+        opacity: 0;
+    }
+
+    80% {
+        transform: scale(1.08);
+        opacity: 1;
+    }
+
+    100% {
+        transform: scale(1);
+    }
+}
