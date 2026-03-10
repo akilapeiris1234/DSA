@@ -1,14 +1,14 @@
 // app/api/gif/route.ts
 // Server-side proxy for the Giphy API — keeps API key on the server
 
-import { GIPHY_API_KEY } from '@/client/features/game/constants';
+import { GIPHY_API_KEY, GIPHY_API_URL } from '@/client/features/game/apiConfig';
 
 export async function GET(request: Request) {
     const { searchParams } = new URL(request.url);
     const tags = searchParams.get('tags') || 'funny';
 
     try {
-        const url = `https://api.giphy.com/v1/gifs/random?api_key=${GIPHY_API_KEY}&tag=${encodeURIComponent(tags)}&rating=g`;
+        const url = `${GIPHY_API_URL}?api_key=${GIPHY_API_KEY}&tag=${encodeURIComponent(tags)}&rating=g`;
         const res = await fetch(url, { cache: 'no-store' });
 
         if (!res.ok) {

@@ -1,13 +1,13 @@
-// app/api/heart/route.ts
+//       app/api/heart/route.ts
 // Server-side proxy for the Heart API — eliminates CORS issues
 // The browser calls /api/heart, which fetches from marcconrad.com server-side
 
-import { API_BASE_URL } from '@/client/features/game/constants';
+import { HEART_API_URL } from '@/client/features/game/apiConfig';
 
 export async function GET() {
     try {
         const res = await fetch(
-            `${API_BASE_URL}?out=json&t=${Date.now()}`,
+            `${HEART_API_URL}?out=json&t=${Date.now()}`,
             { cache: 'no-store' }
         );
 

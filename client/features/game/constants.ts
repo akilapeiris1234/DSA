@@ -15,5 +15,4 @@ export const ICONS = {
     bomb: '/icons/blast.png',
 } as const;
 
-export const GIPHY_API_KEY = 'sQkAbShZNJIPYNZQOPyeenE1Pe1yImNd';
-export const API_BASE_URL = 'http://marcconrad.com/uob/heart/api.php';
+
