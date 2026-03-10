@@ -2,6 +2,7 @@
 // Leaderboard table UI  (no Firebase cinfig)
 "use client";
 
+import Image from 'next/image';
 import type { LeaderboardEntry } from '../types';
 import { ICONS } from '../constants';
 
@@ -26,11 +27,11 @@ export default function LeaderboardView({ leaderboard, leaderboardLoading, curre
                             <th>Rank</th>
                             <th>Player</th>
                             <th>
-                                <img src={ICONS.heart} alt="Hearts" style={{ width: '2em', verticalAlign: 'middle', marginRight: '4px' }} />
+                                <Image src={ICONS.heart} alt="Hearts" width={24} height={24} style={{ verticalAlign: 'middle', marginRight: '4px' }} />
                                 Hearts
                             </th>
                             <th>
-                                <img src={ICONS.carrot} alt="Carrots" style={{ width: '2em', verticalAlign: 'middle', marginRight: '4px' }} />
+                                <Image src={ICONS.carrot} alt="Carrots" width={24} height={24} style={{ verticalAlign: 'middle', marginRight: '4px' }} />
                                 Carrots
                             </th>
                             <th>Time</th>

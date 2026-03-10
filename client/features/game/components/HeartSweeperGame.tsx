@@ -37,12 +37,7 @@ export default function HeartSweeperGame() {
       <GameHero />
       {/* Buttons fixed at bottom center */}
       <div className="fixed bottom-10 left-0 right-0 z-50 flex justify-center items-center gap-8 px-6 md:px-12">
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 1.2, duration: 0.8 }}
-          className="flex flex-col sm:flex-row gap-6 md:gap-12"
-        >
+        <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 1.2, duration: 0.8 }} className="flex flex-col sm:flex-row gap-6 md:gap-12" >
           <PlayButton onClick={handlePlayClick} />
           <HowToPlayButton onClick={handleHowToPlayClick} />
         </motion.div>

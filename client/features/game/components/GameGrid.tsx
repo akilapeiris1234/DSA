@@ -2,6 +2,7 @@
 // Game tile grid (Presentational — receives board + handler as props)
 "use client";
 
+import Image from 'next/image';
 import type { Cell } from '../types';
 import { ICONS } from '../constants';
 
@@ -28,23 +29,18 @@ export default function GameGrid({ board, gridSize, tileSize, onReveal }: GameGr
 
                             if (revealed) {
                                 if (cell.content === 'heart') {
-                                    content = <img src={ICONS.heart} alt="Heart" style={{ width: '85%', height: '85%' }} />;
+                                    content = <Image src={ICONS.heart} alt="Heart" width={tileSize} height={tileSize} style={{ width: '85%', height: '85%' }} />;
                                 } else if (cell.content === 'carrot') {
-                                    content = <img src={ICONS.carrot} alt="Carrot" style={{ width: '85%', height: '85%' }} />;
+                                    content = <Image src={ICONS.carrot} alt="Carrot" width={tileSize} height={tileSize} style={{ width: '85%', height: '85%' }} />;
                                 } else if (cell.content === 'bomb') {
-                                    content = <img src={ICONS.bomb} alt="Bomb" style={{ width: '85%', height: '85%' }} />;
+                                    content = <Image src={ICONS.bomb} alt="Bomb" width={tileSize} height={tileSize} style={{ width: '85%', height: '85%' }} />;
                                 } else if (cell.neighborBombs > 0) {
                                     content = <span className={`hint h${cell.neighborBombs}`}>{cell.neighborBombs}</span>;
                                 }
                             }
 
                             return (
-                                <div
-                                    key={`${ri}-${ci}`}
-                                    className={`tile ${revealed ? 'revealed' : ''} ${revealed && cell.content === 'bomb' ? 'bomb' : ''}`}
-                                    style={{ width: tileSize, height: tileSize }}
-                                    onClick={() => onReveal(ri, ci)}
-                                >
+                                <div key={`${ri}-${ci}`} className={`tile ${revealed ? 'revealed' : ''} ${revealed && cell.content === 'bomb' ? 'bomb' : ''}`} style={{ width: tileSize, height: tileSize }} onClick={() => onReveal(ri, ci)} >
                                     {content}
                                 </div>
                             );

@@ -1,4 +1,4 @@
-/* client/features/game/styles/base.css */
+
 /* Design tokens, resets, and app shell (Separation of Concerns) */
 
 @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;800&family=JetBrains+Mono:wght@700&display=swap');
@@ -38,6 +38,7 @@ header h1 {
     margin: 30px 0 10px;
     background: linear-gradient(to right, var(--primary), #a855f7);
     -webkit-background-clip: text;
+    background-clip: text;
     -webkit-text-fill-color: transparent;
     font-weight: 800;
 }

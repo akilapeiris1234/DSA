@@ -2,6 +2,7 @@
 // Game over results panel (Presentational — shows win/loss, GIF, stats)
 "use client";
 
+import Image from 'next/image';
 import { ICONS } from '../constants';
 
 interface GameOverPanelProps {
@@ -22,8 +23,7 @@ export default function GameOverPanel({
     onRestart,
 }: GameOverPanelProps) {
     return (
-        <div
-            id="game-over"
+        <div id="game-over"
             className={gameWon ? 'win' : 'lose'}
             style={{
                 display: 'block',
@@ -36,8 +36,7 @@ export default function GameOverPanel({
                     ? 'linear-gradient(145deg, #0f3a2a, #1a2f22)'
                     : 'linear-gradient(145deg, #3a1a1f, #2a1a22)',
                 textAlign: 'center',
-            }}
-        >
+            }}>
             <h2 id="res-title" style={{ marginBottom: '16px', fontSize: '2.2rem' }}>
                 {gameWon ? 'MISSION ACCOMPLISHED!' : 'GAME OVER'}
             </h2>
@@ -54,30 +53,21 @@ export default function GameOverPanel({
                     maxWidth: '320px',
                     textAlign: 'center'
                 }}>
-                    <img
-                        src={gifUrl}
-                        alt={gameWon ? "Victory celebration" : "Epic fail moment"}
-                        className="game-over-gif"
-                    />
+                    <Image src={gifUrl} alt={gameWon ? "Victory celebration" : "Epic fail moment"} className="game-over-gif" width={320} height={240} unoptimized />
                 </div>
             ) : (
-                <div style={{
-                    margin: '24px auto',
-                    color: 'rgba(255,255,255,0.7)',
-                    fontStyle: 'italic',
-                    fontSize: '1.1rem'
-                }}>
+                <div style={{ margin: '24px auto', color: 'rgba(255,255,255,0.7)', fontStyle: 'italic', fontSize: '1.1rem' }}>
                     {gameWon ? 'Epic win moment loading...' : 'Oof... tough one!'}
                 </div>
             )}
 
             <div className="result-stats" style={{ margin: '24px 0' }}>
                 <div className="res-stat-item">
-                    <img src={ICONS.heart} alt="Heart" style={{ width: '1.5em', marginRight: '8px' }} />
+                    <Image src={ICONS.heart} alt="Heart" width={24} height={24} style={{ width: '1.5em', marginRight: '8px' }} />
                     Heart <b>{foundHearts}</b>
                 </div>
                 <div className="res-stat-item">
-                    <img src={ICONS.carrot} alt="Carrot" style={{ width: '1.5em', marginRight: '8px' }} />
+                    <Image src={ICONS.carrot} alt="Carrot" width={24} height={24} style={{ width: '1.5em', marginRight: '8px' }} />
                     Carrot <b>{foundCarrots}</b>
                 </div>
                 <div className="res-stat-item">

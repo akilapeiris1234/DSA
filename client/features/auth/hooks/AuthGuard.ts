@@ -10,7 +10,7 @@
 
 "use client";
 
-import { useAuth } from "./useAuth";
+import { useAuth } from "./Auth";
 
 export function useAuthGuard() {
   const { user, loading, error } = useAuth();

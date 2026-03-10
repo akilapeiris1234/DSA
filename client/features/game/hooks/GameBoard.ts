@@ -1,11 +1,10 @@
-// client/features/game/hooks/useGameBoard.ts
 // Manages board generation, tile reveal, win/loss detection (High Cohesion)
 "use client";
 
 import { useState, useEffect, useCallback } from 'react';
 import { eventBus } from '@/lib/core/events';
 import type { Cell, Difficulty } from '../types';
-import { CONFIGS, API_BASE_URL, CORS_PROXY_URL } from '../constants';
+import { CONFIGS } from '../constants';
 
 interface UseGameBoardProps {
     difficulty: Difficulty;
@@ -21,7 +20,7 @@ export function useGameBoard({ difficulty, onTimerStart, onTimerStop, onTimerRes
     const [carrotCount, setCarrotCount] = useState<number | null>(null);
     const [foundHearts, setFoundHearts] = useState(0);
     const [foundCarrots, setFoundCarrots] = useState(0);
-    const [revealedSafeCount, setRevealedSafeCount] = useState(0);
+    const [, setRevealedSafeCount] = useState(0);
     const [totalSafeTiles, setTotalSafeTiles] = useState(0);
     const [isGameOver, setIsGameOver] = useState(false);
     const [gameWon, setGameWon] = useState(false);
@@ -31,15 +30,13 @@ export function useGameBoard({ difficulty, onTimerStart, onTimerStop, onTimerRes
     const gridSize = CONFIGS[difficulty].size;
     const bombCount = CONFIGS[difficulty].bombs;
 
-    // Fetch solution from external API
+    // Fetch solution from Next.js API route (server-side proxy, no CORS issues)
     const fetchSolution = useCallback(async () => {
         setLoading(true);
         setApiError(null);
 
         try {
-            const apiURL = `${API_BASE_URL}?out=json&t=${Date.now()}`;
-            const proxyURL = `${CORS_PROXY_URL}?${encodeURIComponent(apiURL)}`;
-            const res = await fetch(proxyURL, { cache: 'no-store' });
+            const res = await fetch(`/api/heart?t=${Date.now()}`, { cache: 'no-store' });
 
             if (!res.ok) throw new Error(`HTTP ${res.status}`);
 
@@ -165,7 +162,7 @@ export function useGameBoard({ difficulty, onTimerStart, onTimerStop, onTimerRes
         setBoard(newBoard);
     }, [isGameOver, apiError, board, totalSafeTiles, onTimerStart, onTimerStop, revealAll]);
 
-    // Emit GAME_OVER event when game ends (Event-Driven Programming)
+    // Emit GAME OVER event when game ends (Event-Driven Programming)
     useEffect(() => {
         if (isGameOver) {
             eventBus.emit({
@@ -191,7 +188,7 @@ export function useGameBoard({ difficulty, onTimerStart, onTimerStop, onTimerRes
     // Reset game when difficulty changes
     useEffect(() => {
         initGame();
-    }, [difficulty]); // eslint-disable-line react-hooks/exhaustive-deps
+    }, [difficulty, initGame]);
 
     return {
         board,

@@ -17,15 +17,9 @@ interface HowToPlayButtonProps {
 
 export default function HowToPlayButton({ onClick }: HowToPlayButtonProps) {
   return (
-    <motion.button
-      whileHover={{ scale: 1.05 }}
-      whileTap={{ scale: 0.95 }}
-      onClick={onClick}
-      className="group relative cursor-pointer focus:outline-none focus:ring-2 focus:ring-amber-400 rounded-full"
-      aria-label="View game instructions"
-    >
+    <motion.button whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} onClick={onClick} className="group relative cursor-pointer focus:outline-none focus:ring-2 focus:ring-amber-400 rounded-full" aria-label="View game instructions" >
       <div className="absolute inset-0 translate-y-1 bg-[#8b5e3c] rounded-full shadow-md"></div>
-      <div className="relative px-12 py-4 bg-gradient-to-b from-[#fffaf0] to-[#fcf3d7] text-[#5d3a1a] text-xl font-bold rounded-full border-t border-white/50 transition-all duration-200">
+      <div className="relative px-12 py-4 bg-linear-to-b from-[#fffaf0] to-[#fcf3d7] text-[#5d3a1a] text-xl font-bold rounded-full border-t border-white/50 transition-all duration-200">
         How to Play
       </div>
     </motion.button>

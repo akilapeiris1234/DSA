@@ -43,6 +43,15 @@ export function useLeaderboard({
     const [leaderboard, setLeaderboard] = useState<LeaderboardEntry[]>([]);
     const [leaderboardLoading, setLeaderboardLoading] = useState(false);
 
+    // Track previous isGameOver to reset scoreSaved (adjust state during render)
+    const [prevIsGameOver, setPrevIsGameOver] = useState(isGameOver);
+    if (prevIsGameOver !== isGameOver) {
+        setPrevIsGameOver(isGameOver);
+        if (prevIsGameOver && !isGameOver) {
+            setScoreSaved(false);
+        }
+    }
+
     // Save score on game over (with duplicate prevention — update only if better)
     useEffect(() => {
         const saveScore = async () => {
@@ -106,12 +115,6 @@ export function useLeaderboard({
         saveScore();
     }, [isGameOver, scoreSaved, user, difficulty, foundHearts, foundCarrots, seconds, gameWon]);
 
-    // Reset scoreSaved when starting a new game
-    useEffect(() => {
-        if (!isGameOver) {
-            setScoreSaved(false);
-        }
-    }, [isGameOver]);
 
     return { scoreSaved, leaderboard, leaderboardLoading, setLeaderboardLoading, setLeaderboard };
 }
@@ -121,9 +124,17 @@ export function useLeaderboardListener(difficulty: Difficulty, isActive: boolean
     const [leaderboard, setLeaderboard] = useState<LeaderboardEntry[]>([]);
     const [leaderboardLoading, setLeaderboardLoading] = useState(false);
 
+    // Track isActive to set loading (adjust state during render)
+    const [prevIsActive, setPrevIsActive] = useState(isActive);
+    if (prevIsActive !== isActive) {
+        setPrevIsActive(isActive);
+        if (isActive && !prevIsActive) {
+            setLeaderboardLoading(true);
+        }
+    }
+
     useEffect(() => {
         if (!isActive) return;
-        setLeaderboardLoading(true);
         const db = getFirestore(getApp());
         const q = query(
             collection(db, 'leaderboard'),

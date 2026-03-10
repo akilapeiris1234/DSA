@@ -11,7 +11,7 @@ export default function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-8 lg:gap-10">
           <div className="lg:col-span-4 space-y-4">
             <div className="flex items-center gap-3">
-              <div className="rounded-lg bg-gradient-to-br from-rose-500 to-fuchsia-600 p-2 shadow-md">
+              <div className="rounded-lg bg-linear-to-br from-rose-500 to-fuchsia-600 p-2 shadow-md">
                 <ShieldCheck size={22} className="text-white" />
               </div>
               <h3 className="text-xl lg:text-2xl font-black tracking-tight text-white">

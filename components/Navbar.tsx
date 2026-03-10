@@ -16,7 +16,7 @@ export default function Navbar() {
       <div className="mx-auto h-16 md:h-20 flex items-center justify-between px-4 sm:px-6 lg:px-8 xl:px-10 max-w-screen-2xl">
         {/* Left: Logo */}
         <Link href="/" className="flex items-center gap-2.5 sm:gap-3 group">
-          <div className="rounded-xl bg-gradient-to-br from-rose-500 to-fuchsia-600 p-2.5 shadow-lg shadow-rose-900/40 transition group-hover:scale-105">
+          <div className="rounded-xl bg-linear-to-br from-rose-500 to-fuchsia-600 p-2.5 shadow-lg shadow-rose-900/40 transition group-hover:scale-105">
             <Heart size={20} fill="white" className="text-white" />
           </div>
           <span className="text-xl sm:text-2xl font-extrabold tracking-tight">
@@ -34,7 +34,7 @@ export default function Navbar() {
             <motion.button
               whileHover={{ scale: 1.04 }}
               whileTap={{ scale: 0.97 }}
-              className="inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-rose-600 to-fuchsia-700 px-5 sm:px-6 py-2.5 sm:py-3 text-sm font-semibold shadow-lg shadow-fuchsia-950/40 hover:shadow-fuchsia-900/50 transition-all">
+              className="inline-flex items-center gap-2 rounded-full bg-linear-to-r from-rose-600 to-fuchsia-700 px-5 sm:px-6 py-2.5 sm:py-3 text-sm font-semibold shadow-lg shadow-fuchsia-950/40 hover:shadow-fuchsia-900/50 transition-all">
               <Lock size={16} />
               Enter Game
             </motion.button>

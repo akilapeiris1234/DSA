@@ -1,4 +1,3 @@
-// client/features/game/hooks/useGameTimer.ts
 // Manages game timer logic (High Cohesion — timer concern only)
 "use client";
 

@@ -10,7 +10,7 @@ import { Facebook, Twitter, Linkedin, Instagram } from "lucide-react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import LoginForm from "@/client/components/auth/LoginForm";
-import { useAuthRedirect } from "@/client/features/auth/hooks";
+import { useAuthRedirect } from "@/client/features/auth/hooks/authHooks";
 import { AUTH_IMAGES } from "@/client/features/auth/constants";
 
 export default function LoginPage() {
@@ -99,7 +99,7 @@ export default function LoginPage() {
 
               {alreadyLoggedIn && (
                 <p className="text-center text-green-600 mt-6">
-                   logged in scucessfuliiy. Redirecting to game lnading page...
+                  logged in scucessfuliiy. Redirecting to game lnading page...
                 </p>
               )}
             </div>

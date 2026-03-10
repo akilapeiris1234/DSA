@@ -11,8 +11,8 @@
 "use client";
 
 import { useState } from "react";
-import { authService } from "@/lib/data/features/auth/services";
-import type { AuthCredentials } from "@/lib/data/features/auth/types";
+import { authService } from "@/lib/data/features/auth/services/authService";
+import type { AuthCredentials } from "@/lib/data/features/auth/types/authTypes";
 
 export function useLoginForm(onSuccess?: () => void) {
   const [email, setEmail] = useState("");

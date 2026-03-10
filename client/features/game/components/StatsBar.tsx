@@ -2,6 +2,7 @@
 // Top stats bar showing goal, bombs, and timer (Presentational component)
 "use client";
 
+import Image from 'next/image';
 import { ICONS } from '../constants';
 
 interface StatsBarProps {
@@ -18,15 +19,15 @@ export default function StatsBar({ heartCount, carrotCount, bombCount, formatted
                 <div className="stat-label">GOAL</div>
                 <div className="stat-value" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '12px' }}>
                     <span>{heartCount ?? '?'}</span>
-                    <img src={ICONS.heart} alt="Heart" style={{ width: '1.4em', height: '1.4em' }} />
+                    <Image src={ICONS.heart} alt="Heart" width={22} height={22} style={{ width: '1.4em', height: '1.4em' }} />
                     <span>{carrotCount ?? '?'}</span>
-                    <img src={ICONS.carrot} alt="Carrot" style={{ width: '1.4em', height: '1.4em' }} />
+                    <Image src={ICONS.carrot} alt="Carrot" width={22} height={22} style={{ width: '1.4em', height: '1.4em' }} />
                 </div>
             </div>
             <div className="stat-card">
                 <div className="stat-label">BOMBS</div>
-                <div className="stat-value" style={{display:'flex',alignItems: 'center',justifyContent: 'center',gap: '1px'}}>
-                    <img src={ICONS.bomb} alt="Bomb" style={{ width: '1.4em', height: '1.4em', marginRight: '8px' }} />
+                <div className="stat-value" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '1px' }}>
+                    <Image src={ICONS.bomb} alt="Bomb" width={22} height={22} style={{ width: '1.4em', height: '1.4em', marginRight: '8px' }} />
                     {bombCount}
                 </div>
             </div>

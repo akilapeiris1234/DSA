@@ -9,8 +9,8 @@ import Link from "next/link";
 import Image from "next/image";
 import { Eye, EyeOff } from "lucide-react";
 
-import { useSignupForm } from "@/client/features/auth/hooks";
-import { ErrorAlert, FormInput, LoadingButton } from "@/client/lib/ui";
+import { useSignupForm } from "@/client/features/auth/hooks/authHooks";
+import { ErrorAlert, FormInput, LoadingButton } from "@/client/lib/ui/uiComponents";
 
 type Props = {
   onSuccess?: () => void;
@@ -34,7 +34,7 @@ export default function SignupForm({ onSuccess }: Props) {
 
   return (
     <form
-      className="max-w-[380px] mx-auto w-full flex flex-col gap-5"
+      className="max-width:[380px] mx-auto w-full flex flex-col gap-5"
       onSubmit={handleEmailSignup}
     >
       <ErrorAlert message={error || ""} />

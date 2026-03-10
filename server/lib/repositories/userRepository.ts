@@ -9,7 +9,7 @@
 
 import { doc, setDoc, getDoc } from "firebase/firestore";
 import { firebaseClient } from "../firebase/firebaseClient";
-import type { UserProfile } from "@/lib/data/features/auth/types";
+import type { UserProfile } from "@/lib/data/features/auth/types/authTypes";
 
 export class UserRepository {
   private firestore = firebaseClient.getFirestore();

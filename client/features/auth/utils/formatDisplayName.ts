@@ -3,7 +3,7 @@
 // Business logic extracted from UI — keeps components pure presentational
 // Supports Virtual Identity: derives display name from multiple sources
 
-import type { AuthUser } from '@/lib/data/features/auth/types';
+import type { AuthUser } from '@/lib/data/features/auth/types/authTypes';
 
 /**
  * Formats a display name from AuthUser data

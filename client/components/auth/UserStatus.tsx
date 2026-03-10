@@ -7,7 +7,7 @@
 "use client";
 
 import { DoorOpen } from "lucide-react";
-import { useAuth } from "@/client/features/auth/hooks";
+import { useAuth } from "@/client/features/auth/hooks/authHooks";
 import { formatDisplayName } from "@/client/features/auth/utils/formatDisplayName";
 
 export default function UserStatus() {
@@ -30,7 +30,7 @@ export default function UserStatus() {
         className="
           w-7 h-7 sm:w-8 sm:h-8 
           rounded-full 
-          bg-gradient-to-br from-pink-400 to-rose-500 
+          bg-linear-to-br from-pink-400 to-rose-500 
           flex items-center justify-center 
           text-white font-semibold text-sm sm:text-base
           shadow-sm ring-1 ring-white/60
@@ -43,7 +43,7 @@ export default function UserStatus() {
         className="
           text-sm font-medium text-gray-800 
           hidden sm:block 
-          max-w-[140px] truncate
+          max-width:[140px] truncate
         "
       >
         {shortName}

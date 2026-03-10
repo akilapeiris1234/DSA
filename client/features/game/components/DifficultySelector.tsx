@@ -16,11 +16,7 @@ export default function DifficultySelector({ difficulty, onSelect, style }: Diff
     return (
         <div className="difficulty-selector" style={style}>
             {LEVELS.map(lvl => (
-                <button
-                    key={lvl}
-                    className={`diff-btn ${difficulty === lvl ? 'active' : ''}`}
-                    onClick={() => onSelect(lvl)}
-                >
+                <button key={lvl} className={`diff-btn ${difficulty === lvl ? 'active' : ''}`} onClick={() => onSelect(lvl)} >
                     {lvl.charAt(0).toUpperCase() + lvl.slice(1)}
                 </button>
             ))}

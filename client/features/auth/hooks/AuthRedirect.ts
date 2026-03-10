@@ -12,7 +12,7 @@
 
 import { useEffect } from "react";
 import { useRouter, usePathname } from "next/navigation";
-import { useAuth } from "./useAuth";
+import { useAuth } from "./Auth";
 
 type AuthCheckResult = {
   checking: boolean;

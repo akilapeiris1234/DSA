@@ -7,21 +7,22 @@ This document explains the 7 design concepts used in HeartSweeper, how each conc
 
 heartsweeper/
 │
-├── app/                              ← Next.js route pages (thin entry points)
+├── app/                              ← Next.js route pages (thin re-exports)
 │   ├── layout.tsx                    ← Root layout (fonts, global CSS)
-│   ├── page.tsx                      ← Home route → delegates to HomePage
-│   ├── globals.css                   ← Global CSS (design tokens, shared )
-│   ├── login/page.tsx                ← Login route → delegates to LoginPage
-│   ├── signup/page.tsx               ← Signup route → delegates to SignupPage
-│   ├── GameLanding/page.tsx          ← Game landing route → thin orchestrator
-│   └── gamepage/page.tsx             ← Game page route → thin orchestrator
+│   ├── page.tsx                      ← Home route → re-exports HomePage
+│   ├── globals.css                   ← Global CSS (design tokens, shared)
+│   ├── login/page.tsx                ← Login route → re-exports LoginPage
+│   ├── signup/page.tsx               ← Signup route → re-exports SignupPage
+│   ├── GameLanding/page.tsx          ← Game landing route → re-exports GameLanding
+│   └── gamepage/page.tsx             ← Game page route → re-exports gamepage
 │
 ├── client/                           ← All client-side code
 │   ├── pages/                        ← Page-level orchestrators (layout + hooks)
 │   │   ├── HomePage.tsx              ← Public landing page UI
 │   │   ├── LoginPage.tsx             ← Login page layout
 │   │   ├── SignupPage.tsx            ← Signup page layout
-│   │   └── GamePage.tsx              ← Placeholder
+│   │   ├── GameLanding.tsx           ← Game landing page (auth guard + game UI)
+│   │   └── gamepage.tsx              ← Game page orchestrator (hooks + components)
 │   │
 │   ├── components/                   ← Shared UI components
 │   │   ├── auth/
@@ -34,25 +35,24 @@ heartsweeper/
 │   │   ├── auth/                     ← Authentication feature
 │   │   │   ├── constants.ts          ← Auth image paths, config values
 │   │   │   ├── hooks/                ← Auth logic hooks
-│   │   │   │   ├── index.ts          ← Barrel exports
-│   │   │   │   ├── useAuth.ts        ← Auth state management
-│   │   │   │   ├── useAuthGuard.ts   ← Route protection
-│   │   │   │   ├── useAuthRedirect.ts← Redirect if logged in
-│   │   │   │   ├── useLoginForm.ts   ← Login form logic
-│   │   │   │   ├── useSignupForm.ts  ← Signup form logic
-│   │   │   │   └── useLogoutRedirect.ts ← Redirect on logout
+│   │   │   │   ├── authHooks.ts      ← Barrel exports for auth hooks
+│   │   │   │   ├── Auth.ts           ← Auth state management
+│   │   │   │   ├── AuthGuard.ts      ← Route protection
+│   │   │   │   ├── AuthRedirect.ts   ← Redirect if logged in
+│   │   │   │   ├── LoginForm.ts      ← Login form logic
+│   │   │   │   ├── SignupForm.ts     ← Signup form logic
+│   │   │   │   └── LogoutRedirect.ts ← Redirect on logout
 │   │   │   └── utils/
 │   │   │       └── formatDisplayName.ts ← Display name formatting utility
 │   │   │
 │   │   ├── game/                     ← Game feature
 │   │   │   ├── types.ts              ← Game types (Difficulty, Cell, etc.)
 │   │   │   ├── constants.ts          ← Game config (grid sizes, API URLs, etc.)
-│   │   │   ├── hooks/                ← Game logic hooks
-│   │   │   │   ├── index.ts          ← Barrel exports
-│   │   │   │   ├── useGameTimer.ts   ← Timer logic
-│   │   │   │   ├── useGameBoard.ts   ← Board generation, tile reveal, win/loss
-│   │   │   │   ├── useGif.ts         ← GIF fetching on game over
-│   │   │   │   └── useLeaderboard.ts ← Score saving + leaderboard listener
+│   │   │   ├── hooks/                ← Game logic hooks (imported directly)
+│   │   │   │   ├── GameTimer.ts      ← Timer logic
+│   │   │   │   ├── GameBoard.ts      ← Board generation, tile reveal, win/loss
+│   │   │   │   ├── Gif.ts            ← GIF fetching on game over
+│   │   │   │   └── Leaderboard.ts    ← Score saving + leaderboard listener
 │   │   │   ├── components/           ← Game UI components
 │   │   │   │   ├── HeartSweeperGame.tsx   ← Game landing orchestrator
 │   │   │   │   ├── GameNav.tsx            ← Play Game / Leaderboard tabs
@@ -79,7 +79,7 @@ heartsweeper/
 │   └── lib/                          ← Shared client utilities
 │       ├── gameConfig.ts             ← Game landing images, routes, animations
 │       └── ui/                       ← Reusable UI primitives
-│           ├── index.ts              ← Barrel exports
+│           ├── uiComponents.ts       ← Barrel exports
 │           ├── ErrorAlert.tsx         ← Error message display
 │           ├── FormInput.tsx          ← Styled input field
 │           └── LoadingButton.tsx      ← Submit button with loading
@@ -92,7 +92,6 @@ heartsweeper/
 │       └── features/auth/
 │           ├── types/index.ts        ← AuthUser, AuthState, AuthResult types
 │           └── services/
-│               ├── index.ts          ← Service barrel
 │               └── authService.ts    ← Auth business logic + event emitting
 │
 ├── server/                           ← Server-side code
@@ -163,12 +162,12 @@ const result = await authService.loginWithEmail(credentials);
 
 | File | One job only |
 |---|---|
-| `useGameTimer.ts` | Timer: start, stop, reset, format — nothing else |
-| `useGameBoard.ts` | Board: generate, reveal, win/loss — nothing else |
-| `useGif.ts` | GIF: fetch on game over — nothing else |
-| `useLeaderboard.ts` | Scores: save + load from Firebase — nothing else |
-| `useLoginForm.ts` | Login form: email, password, submit — nothing else |
-| `useSignupForm.ts` | Signup form: name, email, password, submit — nothing else |
+| `GameTimer.ts` | Timer: start, stop, reset, format — nothing else |
+| `GameBoard.ts` | Board: generate, reveal, win/loss — nothing else |
+| `Gif.ts` | GIF: fetch on game over — nothing else |
+| `Leaderboard.ts` | Scores: save + load from Firebase — nothing else |
+| `LoginForm.ts` | Login form: email, password, submit — nothing else |
+| `SignupForm.ts` | Signup form: name, email, password, submit — nothing else |
 | `authService.ts` | All auth operations: login, signup, Google, logout — all in one place |
 | `userRepository.ts` | All user profile DB operations: create, get, update — all in one place |
 | `errorHandler.ts` | All Firebase error messages — all defined in one file |
@@ -187,7 +186,7 @@ const result = await authService.loginWithEmail(credentials);
 |---|---|---|
 | **Types** | `types.ts` | Data shapes only — no logic |
 | **Constants** | `constants.ts`, `auth/constants.ts` | Config values — API URLs, image paths |
-| **Logic (Hooks)** | `useGameBoard.ts`, `useLoginForm.ts` | Business logic — no JSX/HTML |
+| **Logic (Hooks)** | `GameBoard.ts`, `LoginForm.ts` | Business logic — no JSX/HTML |
 | **UI (Components)** | `GameGrid.tsx`, `LoginForm.tsx` | HTML/JSX rendering — no Firebase, no business logic |
 | **Styles** | `game.css`, `globals.css` | CSS only — separated by concern |
 
@@ -341,38 +340,39 @@ await updateLastActive(uid);
 
 | Rule | Example |
 |---|---|
-| Auth code goes in `features/auth/` | `useAuth.ts`, `useLoginForm.ts`, `authService.ts` |
-| Game code goes in `features/game/` | `useGameBoard.ts`, `GameGrid.tsx`, `constants.ts` |
-| Logic (hooks) never contain JSX | `useGameTimer.ts` has zero HTML |
+| Auth code goes in `features/auth/` | `Auth.ts`, `LoginForm.ts`, `authService.ts` |
+| Game code goes in `features/game/` | `GameBoard.ts`, `GameGrid.tsx`, `constants.ts` |
+| Logic (hooks) never contain JSX | `GameTimer.ts` has zero HTML |
 | Components never contain Firebase calls | `GameGrid.tsx` does NOT import Firebase |
-| Config values never live in components | `API_BASE_URL` is in `constants.ts`, not `useGameBoard.ts` |
+| Config values never live in components | `API_BASE_URL` is in `constants.ts`, not `GameBoard.ts` |
 | CSS never lives inside components | Shake animation is in `globals.css`, not `LoginPage.tsx` |
 | Types are shared, not duplicated | `Difficulty` type is defined once in `types.ts` |
-| Barrel exports for clean imports | `import { useAuth } from '@/client/features/auth/hooks'` |
+| Route pages are thin re-exports | `app/gamepage/page.tsx` just imports from `client/pages/gamepage.tsx` |
 
 #### Data flow through layers
 
 ```
 ┌───────────────────────────────────────────────────────────┐
 │                    app/ (Route Pages)                      │
-│   Thin entry points — import and re-export page           │
-│   components from client/pages/                           │
+│   Thin re-exports only — 2–3 lines each                   │
+│   e.g. import HeartSweeper from "@/client/pages/gamepage" │
+│        export default HeartSweeper;                       │
 └─────────────────────┬─────────────────────────────────────┘
-                      │ imports
+                      │ re-exports
                       ▼
 ┌───────────────────────────────────────────────────────────┐
 │               client/pages/ (Orchestrators)                │
 │   Page-level layout — composes hooks + components          │
-│   Example: gamepage/page.tsx (~156 lines)                  │
+│   Example: gamepage.tsx (~157 lines)                       │
 └────────┬────────────────────────────┬─────────────────────┘
          │ uses                       │ renders
          ▼                            ▼
 ┌────────────────────┐   ┌──────────────────────────────────┐
 │   hooks/ (Logic)   │   │   components/ (UI)                │
-│   useGameTimer     │   │   GameGrid, StatsBar, SidePanel   │
-│   useGameBoard     │   │   GameOverPanel, LeaderboardView   │
-│   useLeaderboard   │   │   (pure presentational — props     │
-│   useGif           │   │    only, no Firebase/logic)        │
+│   GameTimer        │   │   GameGrid, StatsBar, SidePanel   │
+│   GameBoard        │   │   GameOverPanel, LeaderboardView   │
+│   Leaderboard      │   │   (pure presentational — props     │
+│   Gif              │   │    only, no Firebase/logic)        │
 └────────┬───────────┘   └──────────────────────────────────┘
          │ reads
          ▼
@@ -397,4 +397,4 @@ await updateLastActive(uid);
 | **Types** | Defined at top of component | Shared `types.ts` per feature |
 | **Display name logic** | Inside UI component | Extracted to utility function |
 | **User identity** | Duplicate leaderboard entries | One entry per player per difficulty |
-| **Page files** | Did everything | Thin orchestrators (~150 lines) |
+| **Page files** | Did everything | `app/` routes are 2-line re-exports; logic lives in `client/pages/` |

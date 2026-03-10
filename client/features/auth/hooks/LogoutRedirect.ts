@@ -8,7 +8,7 @@
 "use client";
 
 import { useEffect } from "react";
-import { useAuth } from "./useAuth";
+import { useAuth } from "./Auth";
 
 
 export function useLogoutRedirect(redirectPath = "/login"): void {

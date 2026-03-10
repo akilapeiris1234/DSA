@@ -23,9 +23,9 @@ export default function GameGrid({ board, gridSize, tileSize, onReveal }: GameGr
 }
 ```
 
-### Example 2 — useGameBoard hook
+### Example 2 — GameBoard hook
 ```tsx
-// useGameBoard receives timer functions as callbacks
+// GameBoard.ts receives timer functions as callbacks
 // It does NOT import or own the timer — it just calls the functions it was given
 
 export function useGameBoard({ onTimerStart, onTimerStop, onTimerReset }) {
@@ -34,7 +34,7 @@ export function useGameBoard({ onTimerStart, onTimerStop, onTimerReset }) {
 }
 ```
 
-**Why this is good:** If you want to change how the timer works, you ONLY change `useGameTimer.ts`. Nothing else breaks because nothing else knows how the timer works inside.
+**Why this is good:** If you want to change how the timer works, you ONLY change `GameTimer.ts`. Nothing else breaks because nothing else knows how the timer works inside.
 
 ---
 
@@ -48,12 +48,12 @@ export function useGameBoard({ onTimerStart, onTimerStop, onTimerReset }) {
 
 | File | One job only |
 |---|---|
-| `useGameTimer.ts` | Timer: start, stop, reset, format time — **nothing else** |
-| `useGameBoard.ts` | Board: generate tiles, handle clicks, detect win/loss — **nothing else** |
-| `useGif.ts` | GIF: fetch a funny GIF when game ends — **nothing else** |
-| `useLeaderboard.ts` | Scores: save to Firebase, load leaderboard — **nothing else** |
+| `GameTimer.ts` | Timer: start, stop, reset, format time — **nothing else** |
+| `GameBoard.ts` | Board: generate tiles, handle clicks, detect win/loss — **nothing else** |
+| `Gif.ts` | GIF: fetch a funny GIF when game ends — **nothing else** |
+| `Leaderboard.ts` | Scores: save to Firebase, load leaderboard — **nothing else** |
 
-**Why this is good:** If there is a bug with the timer, you know EXACTLY which file to open — `useGameTimer.ts`. You don't have to search through a 650-line file.
+**Why this is good:** If there is a bug with the timer, you know EXACTLY which file to open — `GameTimer.ts`. You don't have to search through a 650-line file.
 
 ---
 
@@ -71,7 +71,8 @@ constants.ts   → All settings and config values (no logic)
 hooks/         → All game logic and behavior (no UI)
 components/    → All visual UI (no logic, no Firebase)
 styles/        → All CSS (split by what part of the page it styles)
-page.tsx       → Just connects everything together (no logic inside)
+page.tsx       → Thin re-export to client/pages/ (2 lines only)
+gamepage.tsx   → Page orchestrator — connects hooks + components (no logic inside)
 ```
 
 ### Real example — API URL
@@ -79,7 +80,7 @@ page.tsx       → Just connects everything together (no logic inside)
 // constants.ts — Config value lives here
 export const API_BASE_URL = 'http://marcconrad.com/uob/heart/api.php';
 
-// useGameBoard.ts — Logic uses it, but does not define it
+// GameBoard.ts — Logic uses it, but does not define it
 import { API_BASE_URL } from '../constants';
 const apiURL = `${API_BASE_URL}?out=json&t=${Date.now()}`;
 ```
@@ -98,7 +99,7 @@ const apiURL = `${API_BASE_URL}?out=json&t=${Date.now()}`;
 
 ### Sending an event (announcing something happened)
 ```typescript
-// useGameBoard.ts — When the game ends, it announces it
+// GameBoard.ts — When the game ends, it announces it
 eventBus.emit({
   type: 'GAME_OVER',
   payload: { won: gameWon, hearts: foundHearts, carrots: foundCarrots, time: seconds },
@@ -107,7 +108,7 @@ eventBus.emit({
 
 ### Sending another event
 ```typescript
-// useLeaderboard.ts — When a score is saved, it announces it
+// Leaderboard.ts — When a score is saved, it announces it
 eventBus.emit({
   type: 'SCORE_SAVED',
   payload: { uid, difficulty }
@@ -123,7 +124,7 @@ export type GameEvent =
   | { type: 'SCORE_SAVED'; payload: { uid: string; difficulty: string } };
 ```
 
-**Why this is good:** `useGameBoard` does not need to know about `useLeaderboard`. It just says "game is over!" and anyone who cares can listen. This keeps things loosely connected (low coupling).
+**Why this is good:** `GameBoard` does not need to know about `Leaderboard`. It just says "game is over!" and anyone who cares can listen. This keeps things loosely connected (low coupling).
 
 ---
 
@@ -172,7 +173,7 @@ import type { Difficulty, LeaderboardEntry } from '@/client/features/game/types'
 **Where we use it in our code:**
 
 ```typescript
-// useLeaderboard.ts — Before saving, check if this player already has a record
+// Leaderboard.ts — Before saving, check if this player already has a record
 
 // Step 1: Search for existing record with same uid + difficulty
 const existingQuery = query(
@@ -213,12 +214,11 @@ client/features/game/
 ├── types.ts              ← Data definitions (what things look like)
 ├── constants.ts          ← Settings and config (API URLs, game settings)
 │
-├── hooks/                ← Game LOGIC (no UI code here)
-│   ├── useGameTimer.ts   ← Timer logic
-│   ├── useGameBoard.ts   ← Board logic
-│   ├── useGif.ts         ← GIF fetching logic
-│   ├── useLeaderboard.ts ← Firebase/score logic
-│   └── index.ts          ← Barrel exports
+├── hooks/                ← Game LOGIC (no UI code here, imported directly)
+│   ├── GameTimer.ts      ← Timer logic
+│   ├── GameBoard.ts      ← Board logic
+│   ├── Gif.ts            ← GIF fetching logic
+│   └── Leaderboard.ts    ← Firebase/score logic
 │
 ├── components/           ← Game UI (no logic here)
 │   ├── GameNav.tsx       ← Navigation bar
@@ -242,8 +242,9 @@ client/features/game/
 ```
 client/features/auth/     ← Authentication code lives here
 ├── hooks/
-│   ├── useAuth.ts        ← Login state
-│   ├── useLogoutRedirect.ts
+│   ├── authHooks.ts      ← Barrel export
+│   ├── Auth.ts           ← Login state
+│   ├── LogoutRedirect.ts
 │   └── ...
 ```
 
@@ -257,9 +258,10 @@ client/features/auth/     ← Authentication code lives here
 |---|---|---|
 | **Files** | 1 file with 650 lines | 22 focused files |
 | **Game logic** | Mixed with UI in same file | Separated into hooks |
-| **Firebase** | Mixed with game code | Isolated in `useLeaderboard.ts` |
-| **Authentication** | Imported directly in game file | Stays in `auth/` feature, connected via `page.tsx` |
+| **Firebase** | Mixed with game code | Isolated in `Leaderboard.ts` |
+| **Authentication** | Imported directly in game file | Stays in `auth/` feature, connected via thin re-export in `app/` |
 | **CSS** | 1 big file (471 lines) | 6 small focused files |
 | **Config** | Hardcoded in the component | Centralized in `constants.ts` |
 | **Types** | Defined at top of component file | Shared `types.ts` file |
-| **Page file** | Did everything (logic + UI + data) | Thin orchestrator (~156 lines, just wires things together) |
+| **Images** | Raw `<img>` tags | Optimized `next/image` `<Image />` component |
+| **Page file** | Did everything (logic + UI + data) | `app/` route = 2-line re-export; `client/pages/gamepage.tsx` = orchestrator |

@@ -27,7 +27,7 @@ export default function PlayButton({ onClick }: PlayButtonProps) {
       aria-label="Play Game"
     >
       <div className="absolute inset-0 translate-y-2 bg-[#9d1736] rounded-full shadow-lg"></div>
-      <div className="relative px-16 py-5 bg-gradient-to-b from-[#ff5e7e] to-[#e62e5c] text-white text-3xl font-black rounded-full uppercase italic border-t-2 border-white/40 transition-all duration-200">
+      <div className="relative px-16 py-5 bg-linear-to-b from-[#ff5e7e] to-[#e62e5c] text-white text-3xl font-black rounded-full uppercase italic border-t-2 border-white/40 transition-all duration-200">
         PLAY NOW
       </div>
     </motion.button>

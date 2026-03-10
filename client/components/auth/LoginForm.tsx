@@ -9,8 +9,8 @@ import Link from "next/link";
 import Image from "next/image";
 import { Eye, EyeOff } from "lucide-react";
 
-import { useLoginForm } from "@/client/features/auth/hooks";
-import { ErrorAlert, FormInput, LoadingButton } from "@/client/lib/ui";
+import { useLoginForm } from "@/client/features/auth/hooks/authHooks";
+import { ErrorAlert, FormInput, LoadingButton } from "@/client/lib/ui/uiComponents";
 
 type Props = {
   onSuccess?: () => void;
@@ -31,7 +31,7 @@ export default function LoginForm({ onSuccess }: Props) {
   } = useLoginForm(onSuccess);
 
   return (
-    <form className="max-w-[360px] mx-auto w-full flex flex-col gap-5" onSubmit={handleEmailLogin}>
+    <form className="max-width:[380px] mx-auto w-full flex flex-col gap-5" onSubmit={handleEmailLogin}>
       <ErrorAlert message={error || ""} />
 
       <FormInput
@@ -76,9 +76,9 @@ export default function LoginForm({ onSuccess }: Props) {
       </div>
 
       <div className="relative py-2 flex items-center">
-        <div className="flex-grow border-t border-slate-200" />
+        <div className="flex-grow:1 border-t border-slate-200" />
         <span className="mx-4 text-xs text-slate-400 font-medium">or</span>
-        <div className="flex-grow border-t border-slate-200" />
+        <div className="flex-grow:1 border-t border-slate-200" />
       </div>
 
       <button

@@ -1,9 +1,8 @@
-// client/features/game/hooks/useGif.ts
-// Fetches celebratory/fail GIFs from Giphy on game over (Separation of Concerns)
+// client/features/game/hooks/Gif.ts
+// Fetches celebratory/fail GIFs via Next.js API route on game over (Separation of Concerns)
 "use client";
 
 import { useState, useEffect } from 'react';
-import { GIPHY_API_KEY } from '../constants';
 
 export function useGif(isGameOver: boolean, gameWon: boolean) {
     const [gifUrl, setGifUrl] = useState<string | null>(null);
@@ -20,15 +19,10 @@ export function useGif(isGameOver: boolean, gameWon: boolean) {
 
         const fetchGif = async () => {
             try {
-                const url = `https://api.giphy.com/v1/gifs/random?api_key=${GIPHY_API_KEY}&tag=${encodeURIComponent(tags)}&rating=g`;
-                const res = await fetch(url);
+                const res = await fetch(`/api/gif?tags=${encodeURIComponent(tags)}`);
                 if (!res.ok) throw new Error('GIF fetch failed');
                 const data = await res.json();
-                if (data.data?.images?.original?.url) {
-                    setGifUrl(data.data.images.original.url);
-                } else {
-                    setGifUrl(null);
-                }
+                setGifUrl(data.gifUrl || null);
             } catch (err) {
                 console.error('GIF fetch error:', err);
                 setGifUrl(null);

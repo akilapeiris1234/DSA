@@ -17,4 +17,3 @@ export const ICONS = {
 
 export const GIPHY_API_KEY = 'sQkAbShZNJIPYNZQOPyeenE1Pe1yImNd';
 export const API_BASE_URL = 'http://marcconrad.com/uob/heart/api.php';
-export const CORS_PROXY_URL = 'https://corsproxy.io/';

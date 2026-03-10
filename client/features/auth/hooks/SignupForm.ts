@@ -11,8 +11,8 @@
 "use client";
 
 import { useState } from "react";
-import { authService } from "@/lib/data/features/auth/services";
-import type { SignupData } from "@/lib/data/features/auth/types";
+import { authService } from "@/lib/data/features/auth/services/authService";
+import type { SignupData } from "@/lib/data/features/auth/types/authTypes";
 
 export function useSignupForm(onSuccess?: () => void) {
   const [fullName, setFullName] = useState("");

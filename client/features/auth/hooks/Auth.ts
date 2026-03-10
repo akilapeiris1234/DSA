@@ -12,9 +12,9 @@
 "use client";
 
 import { useEffect, useState, useCallback } from "react";
-import { authService } from "@/lib/data/features/auth/services";
+import { authService } from "@/lib/data/features/auth/services/authService";
 import { eventBus } from "@/lib/core/events";
-import type { AuthUser, AuthState } from "@/lib/data/features/auth/types";
+import type { AuthState } from "@/lib/data/features/auth/types/authTypes";
 
 export function useAuth(): AuthState & { logout: () => Promise<void> } {
   const [state, setState] = useState<AuthState>({

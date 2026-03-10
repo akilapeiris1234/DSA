@@ -10,7 +10,7 @@
  * - Virtual Identity: Maps Firebase User to app-level AuthUser type
  */
 
-import { getAdditionalUserInfo, User, UserCredential } from "firebase/auth";
+import { getAdditionalUserInfo, User } from "firebase/auth";
 import { firebaseClient } from "@/server/lib/firebase/firebaseClient";
 import { userRepository } from "@/server/lib/repositories/userRepository";
 import { mapAuthError } from "@/server/lib/utils/errorHandler";
@@ -20,7 +20,7 @@ import type {
   SignupData,
   AuthUser,
   AuthResult
-} from "@/lib/data/features/auth/types";
+} from "@/lib/data/features/auth/types/authTypes";
 
 export class AuthService {
   /**
@@ -65,7 +65,6 @@ export class AuthService {
         data.email,
         data.password
       );
-
       const user = credential.user;
 
       // Update display name

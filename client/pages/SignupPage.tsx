@@ -10,7 +10,7 @@ import { Facebook, Twitter, Linkedin, Instagram } from "lucide-react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import SignupForm from "@/client/components/auth/SignupForm";
-import { useAuthRedirect } from "@/client/features/auth/hooks";
+import { useAuthRedirect } from "@/client/features/auth/hooks/authHooks";
 import { AUTH_IMAGES } from "@/client/features/auth/constants";
 
 export default function SignupPage() {
@@ -41,15 +41,10 @@ export default function SignupPage() {
       }}
     >
       <div className="absolute inset-0 bg-black/25 lg:bg-black/0 pointer-events-none z-0 lg:hidden" />
-      <div
-        className="absolute inset-0 bg-white transition-all duration-700 hidden lg:block z-0"
-        style={{ clipPath: "polygon(65% 0, 100% 0, 100% 100%, 55% 100%)" }}
-      />
-
+      <div className="absolute inset-0 bg-white transition-all duration-700 hidden lg:block z-0" style={{ clipPath: "polygon(65% 0, 100% 0, 100% 100%, 55% 100%)" }} />
       <div className="relative z-20">
         <Navbar />
       </div>
-
       <main className="grow relative z-10 flex flex-col items-center px-4 py-16 lg:py-24">
         <div className="bg-white w-full max-w-5xl rounded-[35px] shadow-2xl flex flex-col lg:flex-row overflow-hidden transition-transform duration-500 ease-out hover:scale-[1.005]">
           {/* Left Panel – almost identical to login but adjusted text */}
@@ -65,10 +60,7 @@ export default function SignupPage() {
             <div className="absolute inset-0 bg-black/30 pointer-events-none" />
             <div className="relative z-10 flex justify-end items-center">
               <div className="flex gap-6 items-center">
-                <Link
-                  href="/login"
-                  className="text-sm font-bold hover:opacity-70 transition-transform"
-                >
+                <Link href="/login" className="text-sm font-bold hover:opacity-70 transition-transform" >
                   Login
                 </Link>
                 <button className="px-6 py-2 border border-white/60 rounded-full text-sm font-bold hover:bg-white/10 transition-all transform hover:scale-105">
@@ -86,7 +78,6 @@ export default function SignupPage() {
             </div>
             <div className="relative z-10 h-10" />
           </div>
-
           {/* Right side – now clean */}
           <div className="w-full lg:w-1/2 px-8 py-10 lg:px-14 flex flex-col justify-between bg-white">
             <div className="h-6 lg:h-10" />
@@ -100,7 +91,6 @@ export default function SignupPage() {
                   Start your journey today
                 </p>
               </div>
-
               <SignupForm />
             </div>
 
@@ -125,7 +115,6 @@ export default function SignupPage() {
       <div className="relative z-20">
         <Footer />
       </div>
-
       {/* Shake animation is now in globals.css (Separation of Concerns) */}
     </div>
   );
