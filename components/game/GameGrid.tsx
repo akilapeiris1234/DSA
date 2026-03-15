@@ -1,0 +1,50 @@
+"use client";
+import Image from 'next/image';
+import type { Cell } from '@/lib/game/types';
+import { ICONS } from '@/lib/game/constants';
+
+interface GameGridProps {
+    board: Cell[][];
+    gridSize: number;
+    tileSize: number;
+    onReveal: (r: number, c: number) => void;
+}
+
+export default function GameGrid({ board, gridSize, tileSize, onReveal }: GameGridProps) {
+    return (
+        <div className="grid-container">
+            <div id="grid" className="grid" style={{ gridTemplateColumns: `repeat(${gridSize}, 1fr)` }}>
+                {board.length === 0 ? (
+                    <div style={{ gridColumn: '1 / -1', padding: '60px', textAlign: 'center' }}>
+                        Preparing game...
+                    </div>
+                ) : (
+                    board.map((row, ri) =>
+                        row.map((cell, ci) => {
+                            const revealed = cell.revealed;
+                            let content: string | React.ReactElement = '';
+
+                            if (revealed) {
+                                if (cell.content === 'heart') {
+                                    content = <Image src={ICONS.heart} alt="Heart" width={tileSize} height={tileSize} style={{ width: '85%', height: '85%' }} />;
+                                } else if (cell.content === 'carrot') {
+                                    content = <Image src={ICONS.carrot} alt="Carrot" width={tileSize} height={tileSize} style={{ width: '85%', height: '85%' }} />;
+                                } else if (cell.content === 'bomb') {
+                                    content = <Image src={ICONS.bomb} alt="Bomb" width={tileSize} height={tileSize} style={{ width: '85%', height: '85%' }} />;
+                                } else if (cell.neighborBombs > 0) {
+                                    content = <span className={`hint h${cell.neighborBombs}`}>{cell.neighborBombs}</span>;
+                                }
+                            }
+
+                            return (
+                                <div key={`${ri}-${ci}`} className={`tile ${revealed ? 'revealed' : ''} ${revealed && cell.content === 'bomb' ? 'bomb' : ''}`} style={{ width: tileSize, height: tileSize }} onClick={() => onReveal(ri, ci)} >
+                                    {content}
+                                </div>
+                            );
+                        })
+                    )
+                )}
+            </div>
+        </div>
+    );
+}
