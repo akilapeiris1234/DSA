@@ -1,5 +1,4 @@
-
-// app/page.tsx
+// client/pages/HomePage.tsx
 // Public landing page — no auth or game logic (Separation of Concerns)
 // Uses shared Navbar/Footer components (Interoperability, Low Coupling)
 
@@ -13,7 +12,7 @@ import { ArrowRight, Lock } from "lucide-react";
 
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
-import { AUTH_IMAGES } from "@/lib/auth/authConstants";
+import { AUTH_IMAGES } from "@/client/features/auth/constants";
 
 export default function HomePage() {
   const containerVariants: Variants = {

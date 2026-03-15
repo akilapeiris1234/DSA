@@ -1,0 +1,200 @@
+/* client/features/game/styles/game.css */
+/* Game board, tiles, stats, side panel, and difficulty selector styles */
+
+/* Difficulty Selector */
+.difficulty-selector {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.diff-btn {
+    padding: 8px 16px;
+    background: var(--tile);
+    border: 1px solid var(--border);
+    color: var(--text);
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: 0.2s;
+}
+
+.diff-btn.active {
+    background: var(--primary);
+    border-color: var(--primary);
+    color: white;
+    box-shadow: 0 0 15px rgba(255, 51, 102, 0.3);
+}
+
+/* Game Layout */
+.game-container-layout {
+    display: flex;
+    gap: 30px;
+    width: 100%;
+    justify-content: center;
+    align-items: flex-start;
+}
+
+.board-column {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex: 1;
+}
+
+/* Top Stats Bar */
+.stats-bar {
+    display: flex;
+    gap: 20px;
+    background: var(--surface);
+    padding: 12px 30px;
+    border-radius: 12px;
+    border: 1px solid var(--border);
+    margin-bottom: 20px;
+    width: 100%;
+    justify-content: space-around;
+}
+
+.stat-card {
+    text-align: center;
+}
+
+.stat-label {
+    font-size: 0.65rem;
+    text-transform: uppercase;
+    color: #8b949e;
+}
+
+.stat-value {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 1.2rem;
+    color: var(--accent);
+}
+
+/* Sidebar (Live Progress) */
+.side-panel {
+    width: 200px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    position: sticky;
+    top: 100px;
+}
+
+.side-label {
+    font-size: 0.7rem;
+    color: #8b949e;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 5px;
+}
+
+.side-score {
+    background: var(--bg);
+    padding: 15px;
+    border-radius: 10px;
+    text-align: center;
+    border: 1px solid var(--border);
+}
+
+.side-score span {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 1.8rem;
+    display: block;
+}
+
+.side-score.heart {
+    color: var(--primary);
+}
+
+.side-score.carrot {
+    color: #ffa500;
+}
+
+.side-score img,
+.stat-value img,
+.res-stat-item img {
+    vertical-align: middle;
+}
+
+/* Grid */
+.grid-container {
+    background: var(--surface);
+    padding: 12px;
+    border-radius: 12px;
+    border: 1px solid var(--border);
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+}
+
+.grid {
+    display: grid;
+    gap: 4px;
+}
+
+.tile {
+    width: 40px;
+    height: 40px;
+    background: var(--tile);
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-size: 1.4rem;
+    transition: 0.1s;
+    user-select: none;
+}
+
+.tile.revealed {
+    background: var(--tile-revealed);
+    cursor: default;
+    border: 1px solid var(--border);
+}
+
+.tile img {
+    max-width: 90%;
+    max-height: 90%;
+    object-fit: contain;
+}
+
+.hint {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.9rem;
+    font-weight: 800;
+}
+
+.h1 {
+    color: #58a6ff;
+}
+
+.h2 {
+    color: #3fb950;
+}
+
+.h3 {
+    color: #f85149;
+}
+
+.tile.bomb.revealed {
+    background: rgba(248, 81, 73, 0.3);
+    border-color: #f85149;
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+    .game-container-layout {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .side-panel {
+        width: 100%;
+        flex-direction: row;
+        position: static;
+        justify-content: center;
+    }
+}

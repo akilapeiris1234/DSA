@@ -12,7 +12,6 @@ import type {
 } from "@/lib/data/features/auth/types/authTypes";
 
 export class AuthService {
-  // Calls the firebase client and updates the user's last active time.
   async loginWithEmail(credentials: AuthCredentials): Promise<AuthResult> {
     try {
       const credential = await firebaseClient.signInWithEmail(
@@ -39,30 +38,32 @@ export class AuthService {
     }
   }
 
-  // Sign up a new user with email and password.
+  /**
+   * Signup with email and password
+   */
   async signupWithEmail(data: SignupData): Promise<AuthResult> {
     try {
       if (data.password.length < 6) {
         throw new Error("Password must be at least 6 characters long");
       }
-        //crate user using email and password,
+
       const credential = await firebaseClient.createUserWithEmail(
         data.email,
         data.password
       );
       const user = credential.user;
 
+      // Update display name
       if (data.fullName) {
         await firebaseClient.updateUserProfile(data.fullName);
       }
 
-
+      // Create user profile in Firestore
       await userRepository.createProfile(user.uid, {
         email: data.email,
         fullName: data.fullName,
       });
 
-      {/** System Event */}
       eventBus.emit({
         type: "SIGNUP_SUCCESS",
         payload: { uid: user.uid, email: user.email || "" },
@@ -83,7 +84,9 @@ export class AuthService {
     }
   }
 
-  // Sign in with Google. If the user is new, create a Firestore profile.
+  /**
+   * Sign in with Google
+   */
   async signInWithGoogle(): Promise<AuthResult> {
     try {
       const credential = await firebaseClient.signInWithGoogle();
@@ -91,6 +94,7 @@ export class AuthService {
       const additionalInfo = getAdditionalUserInfo(credential);
       const isNewUser = additionalInfo?.isNewUser ?? false;
 
+      // Create profile for new users
       if (isNewUser) {
         await userRepository.createProfile(user.uid, {
           email: user.email || "",
@@ -122,7 +126,9 @@ export class AuthService {
     }
   }
 
-  // Log out the current user.
+  /**
+   * Logout
+   */
   async logout(): Promise<AuthResult> {
     try {
       await firebaseClient.signOut();
@@ -134,7 +140,9 @@ export class AuthService {
     }
   }
 
-
+  /**
+   * Convert Firebase user to app user type
+   */
   mapFirebaseUser(firebaseUser: User | null): AuthUser | null {
     if (!firebaseUser) return null;
 
@@ -146,6 +154,9 @@ export class AuthService {
     };
   }
 
+  /**
+   * Subscribe to auth state changes
+   */
   subscribeToAuth(callback: (user: AuthUser | null) => void): () => void {
     return firebaseClient.onAuthStateChanged((firebaseUser: User | null) => {
       const user = this.mapFirebaseUser(firebaseUser);

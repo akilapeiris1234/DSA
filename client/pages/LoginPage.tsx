@@ -1,5 +1,7 @@
-
-
+// client/pages/LoginPage.tsx
+// Page-level orchestrator for the login screen (Clean Folder Structure)
+// Auth logic is in useAuthRedirect hook, form logic is in useLoginForm hook (Separation of Concerns)
+// UI layout only — delegates form rendering to LoginForm component (Low Coupling)
 
 "use client";
 
@@ -7,9 +9,9 @@ import Link from "next/link";
 import { Facebook, Twitter, Linkedin, Instagram } from "lucide-react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
-import LoginForm from "@/components/auth/LoginForm";
-import { useAuthRedirect } from "@/hooks/auth/useAuthRedirect";
-import { AUTH_IMAGES } from "@/lib/auth/authConstants";
+import LoginForm from "@/client/components/auth/LoginForm";
+import { useAuthRedirect } from "@/client/features/auth/hooks/authHooks";
+import { AUTH_IMAGES } from "@/client/features/auth/constants";
 
 export default function LoginPage() {
   const { checking, alreadyLoggedIn } = useAuthRedirect();
@@ -25,7 +27,7 @@ export default function LoginPage() {
     );
   }
 
-  // Image path 
+  // Image path (Separation of Concerns)
   const bgImage = AUTH_IMAGES.background;
 
   return (
@@ -97,7 +99,7 @@ export default function LoginPage() {
 
               {alreadyLoggedIn && (
                 <p className="text-center text-green-600 mt-6">
-                  Logged in successfully. Redirecting to game landing page...
+                  logged in scucessfuliiy. Redirecting to game lnading page...
                 </p>
               )}
             </div>

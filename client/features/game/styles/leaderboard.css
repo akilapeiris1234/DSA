@@ -1,0 +1,77 @@
+/* client/features/game/styles/leaderboard.css */
+/* Leaderboard table, ranks, badges, and current-user highlight styles */
+
+.leaderboard-container {
+    width: 100%;
+    background: var(--surface);
+    border-radius: 16px;
+    border: 1px solid var(--border);
+    padding: 20px;
+    margin-top: 20px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th {
+    padding: 15px;
+    border-bottom: 2px solid var(--border);
+    color: #8b949e;
+    text-transform: uppercase;
+    font-size: 0.8rem;
+}
+
+td {
+    padding: 15px;
+    border-bottom: 1px solid var(--border);
+    font-family: 'JetBrains Mono', monospace;
+}
+
+.rank {
+    color: var(--gold);
+    font-weight: bold;
+}
+
+td.rank {
+    font-size: 1.3rem;
+}
+
+/* Current User Row Highlight */
+.current-user-row {
+    background: rgba(255, 51, 102, 0.08) !important;
+    border-left: 3px solid var(--primary);
+}
+
+.current-user-row td {
+    color: #fff;
+    font-weight: 600;
+}
+
+/* Result Badges */
+.result-badge {
+    padding: 4px 10px;
+    border-radius: 6px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    white-space: nowrap;
+}
+
+.badge-win {
+    background: rgba(0, 255, 204, 0.12);
+    color: var(--accent);
+    border: 1px solid rgba(0, 255, 204, 0.25);
+}
+
+.badge-loss {
+    background: rgba(92, 79, 78, 0.12);
+    color: var(--danger);
+    border: 1px solid rgba(66, 45, 44, 0.25);
+}
+
+/* Leaderboard Spinner */
+.leaderboard-container .spinner {
+    margin: 0 auto;
+}

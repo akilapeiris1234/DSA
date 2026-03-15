@@ -1,5 +1,12 @@
-// Defines data structures  for user identity and access.
-
+/**
+ * Auth Feature Types
+ * Centralized type definitions for the auth feature
+ *
+ * Concepts:
+ * - Separation of Concerns: Types are isolated from implementation (no Firebase imports)
+ * - Interoperability: These types are shared between hooks, services, and components
+ * - High Cohesion: All auth-related types live together in one file
+ */
 
 export type AuthCredentials = {
     email: string;
